@@ -20,6 +20,7 @@ services:
     container_name: my_grocy_web
     environment:
       MIX_ENV: dev
+      DB_HOST: db
       DATABASE_URL: ecto://postgres:postgres@db/my_grocy_dev
     volumes:
       - .:/app
