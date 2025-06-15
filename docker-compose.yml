@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16
+    container_name: my_grocy_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: my_grocy
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my_grocy_web
+    environment:
+      MIX_ENV: dev
+      DATABASE_URL: ecto://postgres:postgres@db/my_grocy_dev
+    volumes:
+      - .:/app
+      - deps:/app/deps
+      - _build:/app/_build
+      - node_modules:/app/assets/node_modules
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    command: >
+      sh -c "mix deps.get &&
+             mix ecto.setup &&
+             mix phx.server"
+
+volumes:
+  postgres_data:
+  deps:
+  _build:
+  node_modules:
