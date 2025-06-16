@@ -23,9 +23,6 @@ services:
       SECRET_KEY_BASE: aTyuJwGp3EWP5+7eRP9HK/FsnAXxpogHvhOQ2s6l4lLzohsc1JahRA24Atap9GsW
     volumes:
       - .:/app
-      - deps:/app/deps
-      - _build:/app/_build
-      - node_modules:/app/assets/node_modules
     ports:
       - "4000:4000"
     depends_on:
