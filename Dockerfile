@@ -1,11 +1,12 @@
-FROM elixir:1.16-alpine AS build
+FROM elixir:1.16-alpine
 
 # Instala dependências do sistema
 RUN apk add --no-cache build-base git npm nodejs postgresql-dev
 
 # Define variáveis
 ENV MIX_ENV=prod \
-    LANG=C.UTF-8
+    LANG=C.UTF-8 \
+    PORT=4000
 
 WORKDIR /app
 
@@ -19,26 +20,17 @@ RUN mix local.hex --force && \
     mix deps.get --only prod && \
     mix deps.compile
 
-# Copia código restante
+# Copia o restante do código
 COPY . .
 
+# Gera assets e digests
 RUN mix assets.deploy
 
-# Compila o release
-RUN mix release
+# Compila o app (sem release)
+RUN mix compile
 
-# Stage 2: Runtime
-FROM alpine:3.19 AS app
-
-RUN apk add --no-cache libstdc++ openssl ncurses-libs
-
-WORKDIR /app
-
-# Copia release da etapa anterior
-COPY --from=build /app/_build/prod/rel/* ./
-
-# Exponha a porta (ajuste se usar outra)
+# Expõe a porta padrão do Phoenix
 EXPOSE 4000
 
-# Define entrada padrão
-CMD ["bin/my_grocy", "start"]
+# Comando padrão
+CMD ["mix", "phx.server"]
