@@ -37,6 +37,3 @@ services:
 
 volumes:
   postgres_data:
-  deps:
-  _build:
-  node_modules:
