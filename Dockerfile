@@ -22,9 +22,7 @@ RUN mix local.hex --force && \
 # Copia código restante
 COPY . .
 
-# Compila assets se houver (ajuste se não usar tailwind/webpack)
-RUN cd assets
-RUN mix phx.digest
+RUN mix assets.deploy
 
 # Compila o release
 RUN mix release
