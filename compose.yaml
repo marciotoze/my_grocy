@@ -22,6 +22,7 @@ services:
       MIX_ENV: prod
       DB_HOST: db
       DATABASE_URL: ecto://postgres:postgres@db/my_grocy
+      SECRET_KEY_BASE: aTyuJwGp3EWP5+7eRP9HK/FsnAXxpogHvhOQ2s6l4lLzohsc1JahRA24Atap9GsW
     volumes:
       - .:/app
       - deps:/app/deps
