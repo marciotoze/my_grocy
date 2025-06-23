@@ -1,17 +1,195 @@
 <!DOCTYPE html>
-<html lang="en" class="[scrollbar-gutter:stable]">
+<html lang="en">
   <head>
+    
+<!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="csrf-token" content={get_csrf_token()} />
+    
+<!-- Meta -->
+    <meta name="description" content="Responsive Bootstrap 5 Dashboard Template" />
+    <meta name="author" content="ThemePixels" />
+    
+<!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.png" />
+
     <.live_title default="MyGrocy" suffix=" · Phoenix Framework">
       {assigns[:page_title]}
     </.live_title>
+    
+<!-- DashForge CSS -->
+    <link rel="stylesheet" href="/theme/css/dashforge.css" />
+    <link rel="stylesheet" href="/theme/css/dashforge.dashboard.css" />
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body class="bg-white">
-    {@inner_content}
+  <body class="page-profile">
+    <div class="content content-fixed">
+      <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+        <div class="row row-xs">
+          <div class="col">
+            <label class="card card-body" for="flexRadioDefault1">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                />
+                <div class="form-check-label">
+                  Testing
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="col">
+            <label class="card card-body" for="flexRadioDefault2">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault2"
+                />
+                <div class="form-check-label">
+                  Testing
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div></div>
+
+        <div class="card ht-100p">
+          <div class="card-header d-flex align-items-center justify-content-between pd-r-10">
+            <h6 class="mg-b-0">Transaction History</h6>
+            <div class="d-flex tx-16">
+              <a href="" class="link-03 lh-0">
+                <ion-icon name="reload-outline"></ion-icon>
+              </a>
+              <a href="" class="link-03 lh-0 mg-l-5">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+              </a>
+            </div>
+          </div>
+          <ul class="list-group list-group-flush tx-13">
+            <li class="list-group-item d-flex pd-sm-x-20">
+              <div class="avatar d-none d-sm-block">
+                <span class="avatar-initial rounded-circle bg-teal">
+                  <ion-icon name="checkmark" class="tx-20"></ion-icon>
+                </span>
+              </div>
+              <div class="pd-sm-l-10">
+                <p class="tx-medium mg-b-0">Payment from #10322</p>
+                <small class="tx-12 tx-color-03 mg-b-0">Mar 21, 2023, 3:30pm</small>
+              </div>
+              <div class="mg-l-auto text-end">
+                <p class="tx-medium mg-b-0">+ $250.00</p>
+                <small class="tx-12 tx-success mg-b-0">Completed</small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex pd-sm-x-20">
+              <div class="avatar d-none d-sm-block">
+                <span class="avatar-initial rounded-circle bg-indigo op-5">
+                  <ion-icon name="return-down-back" class="tx-20"></ion-icon>
+                </span>
+              </div>
+              <div class="pd-sm-l-10">
+                <p class="tx-medium mg-b-2">Process refund to #00910</p>
+                <small class="tx-12 tx-color-03 mg-b-0">Mar 21, 2023, 1:00pm</small>
+              </div>
+              <div class="mg-l-auto text-end">
+                <p class="tx-medium mg-b-2">-$16.50</p>
+                <small class="tx-12 tx-success mg-b-0">Completed</small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex pd-sm-x-20">
+              <div class="avatar d-none d-sm-block">
+                <span class="avatar-initial rounded-circle bg-orange op-5">
+                  <ion-icon name="bus-outline" class="tx-20"></ion-icon>
+                </span>
+              </div>
+              <div class="pd-sm-l-10">
+                <p class="tx-medium mg-b-2">Process delivery to #44333</p>
+                <small class="tx-12 tx-color-03 mg-b-0">Mar 20, 2023, 11:40am</small>
+              </div>
+              <div class="mg-l-auto text-end">
+                <p class="tx-medium mg-b-2">3 Items</p>
+                <small class="tx-12 tx-info mg-b-0">For pickup</small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex pd-sm-x-20">
+              <div class="avatar d-none d-sm-block">
+                <span class="avatar-initial rounded-circle bg-teal">
+                  <ion-icon name="checkmark-outline" class="tx-20"></ion-icon>
+                </span>
+              </div>
+              <div class="pd-sm-l-10">
+                <p class="tx-medium mg-b-0">Payment from #023328</p>
+                <small class="tx-12 tx-color-03 mg-b-0">Mar 20, 2023, 10:30pm</small>
+              </div>
+              <div class="mg-l-auto text-end">
+                <p class="tx-medium mg-b-0">+ $129.50</p>
+                <small class="tx-12 tx-success mg-b-0">Completed</small>
+              </div>
+            </li>
+            <li class="list-group-item d-flex pd-sm-x-20">
+              <div class="avatar d-none d-sm-block">
+                <span class="avatar-initial rounded-circle bg-gray-400">
+                  <ion-icon name="close-outline" class="tx-20"></ion-icon>
+                </span>
+              </div>
+              <div class="pd-sm-l-10">
+                <p class="tx-medium mg-b-0">Payment failed from #087651</p>
+                <small class="tx-12 tx-color-03 mg-b-0">Mar 19, 2023, 12:54pm</small>
+              </div>
+              <div class="mg-l-auto text-end">
+                <p class="tx-medium mg-b-0">$150.00</p>
+                <small class="tx-12 tx-danger mg-b-0">Declined</small>
+              </div>
+            </li>
+          </ul>
+          <!-- card-footer -->
+        </div>
+        <!-- row -->
+      </div>
+      <!-- container -->
+    </div>
+    <!-- content -->
+
+    <footer class="footer">
+      <div>
+        <span>&copy; 2023 DashForge v1.0.0. </span>
+        <span>Created by <a href="http://themepixels.me">ThemePixels</a></span>
+      </div>
+      <div>
+        <nav class="nav">
+          <a href="https://themeforest.net/licenses/standard" class="nav-link">Licenses</a>
+          <a href="../../change-log.html" class="nav-link">Change Log</a>
+          <a href="https://discordapp.com/invite/RYqkVuw" class="nav-link">Get Help</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="/theme/lib/jquery/jquery.min.js">
+    </script>
+    <script src="/theme/lib/bootstrap/js/bootstrap.bundle.min.js">
+    </script>
+    <script src="/theme/lib/feather-icons/feather.min.js">
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
+    </script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js">
+    </script>
+    <script src="/theme/lib/perfect-scrollbar/perfect-scrollbar.min.js">
+    </script>
+
+    <script src="/theme/js/dashforge.js">
+    </script>
+    
+<!-- append theme customizer -->
   </body>
 </html>

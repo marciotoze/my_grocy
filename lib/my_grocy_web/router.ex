@@ -17,7 +17,9 @@ defmodule MyGrocyWeb.Router do
   scope "/", MyGrocyWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", ProductLive.Index, :index
+    live "/add", ProductLive.Index, :add
+    live "/remove", ProductLive.Index, :remove
   end
 
   # Other scopes may use custom stacks.
