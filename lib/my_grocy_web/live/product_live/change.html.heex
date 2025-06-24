@@ -1,0 +1,98 @@
+<div class="content content-fixed">
+  <div class="container pd-x-0 pd-lg-x-10 pd-xl-x-0">
+    <form phx-submit="submit">
+      <div class="w-full mb-4">
+        <div id="scanner" phx-hook="BarcodeScanner" phx-update="ignore" class="w-full"></div>
+      </div>
+
+      <div class="row row-xs">
+        <div class="col">
+          <label class="card card-body" for="action-add">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="action"
+                value="add"
+                phx-update="ignore"
+                id="action-add"
+                checked="checked"
+              />
+              <div class="form-check-label">
+                Adicionar
+              </div>
+            </div>
+          </label>
+        </div>
+        <div class="col">
+          <label class="card card-body" for="action-remove">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="action"
+                phx-update="ignore"
+                id="action-remove"
+                value="remove"
+              />
+              <div class="form-check-label">
+                Remover
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <input type="hidden" name="barcode" />
+      <input type="hidden" name="quantity" value="1" />
+
+      <div class="card ht-100p mt-4">
+        <div class="card-header d-flex align-items-center justify-content-between pd-r-10">
+          <h6 class="mg-b-0">Histórico</h6>
+        </div>
+        <ul class="list-group list-group-flush tx-13">
+          <li :for={{_id, product} <- @streams.products} class="list-group-item d-flex pd-sm-x-20">
+            <div class="avatar d-none d-sm-block">
+              <span class="avatar-initial rounded-circle bg-teal">
+                <ion-icon name="checkmark" class="tx-20"></ion-icon>
+              </span>
+            </div>
+            <div class="pd-sm-l-10">
+              <p class="tx-medium mg-b-0">{product.name}</p>
+              <small class="tx-12 tx-color-03 mg-b-0">{time_ago(product.updated_at)}</small>
+            </div>
+            <div class="mg-l-auto text-end">
+              <p class="tx-medium mg-b-0">{product.quantity}</p>
+            </div>
+          </li>
+        </ul>
+        <!-- card-footer -->
+      </div>
+      <!-- row -->
+    </form>
+  </div>
+  <!-- container -->
+</div>
+
+<.modal
+  :if={@show_modal}
+  title="Escolha o produto"
+  id="product-modal"
+  show
+  on_cancel={JS.patch(~p"/")}
+>
+  <div>
+    <.form phx-submit="submit_new_product">
+      <div class="form-group">
+        <label class="d-block">Nome do produto</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          placeholder="Insira o nome do produto"
+        />
+      </div>
+      <button class="btn btn-primary" type="submit">Enviar</button>
+    </.form>
+  </div>
+</.modal>

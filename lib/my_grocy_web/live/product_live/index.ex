@@ -20,12 +20,6 @@ defmodule MyGrocyWeb.ProductLive.Index do
     |> assign(:product, Products.get_product!(id))
   end
 
-  defp apply_action(socket, :new, _params) do
-    socket
-    |> assign(:page_title, "New Product")
-    |> assign(:product, %Product{})
-  end
-
   defp apply_action(socket, :index, _params) do
     socket
     |> assign(:page_title, "Listing Products")
@@ -34,7 +28,10 @@ defmodule MyGrocyWeb.ProductLive.Index do
 
   @impl true
   def handle_info({MyGrocyWeb.ProductLive.FormComponent, {:saved, product}}, socket) do
-    {:noreply, stream_insert(socket, :products, product)}
+    {:noreply,
+     socket
+     |> stream_insert(:products, product)
+     |> push_navigate(to: ~p"/products")}
   end
 
   @impl true

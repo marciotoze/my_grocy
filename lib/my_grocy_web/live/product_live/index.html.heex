@@ -1,41 +1,35 @@
-<.header>
-  Listing Products
-  <:actions>
-    <.link patch={~p"/products/new"}>
-      <.button>New Product</.button>
-    </.link>
-  </:actions>
-</.header>
-
-<.table
-  id="products"
-  rows={@streams.products}
-  row_click={fn {_id, product} -> JS.navigate(~p"/products/#{product}") end}
->
-  <:col :let={{_id, product}} label="Name">{product.name}</:col>
-  <:col :let={{_id, product}} label="Quantity">{product.quantity}</:col>
-  <:col :let={{_id, product}} label="Min quantity">{product.min_quantity}</:col>
-  <:col :let={{_id, product}} label="Barcodes">{product.barcodes}</:col>
-  <:action :let={{_id, product}}>
-    <div class="sr-only">
-      <.link navigate={~p"/products/#{product}"}>Show</.link>
+<div class="card">
+  <div class="card-header d-sm-flex align-items-start justify-content-between">
+    <h6 class="lh-5 mg-b-0">Lista de Produtos</h6>
+  </div>
+  <!-- card-header -->
+  <div class="card-body pd-y-15 pd-x-10">
+    <div class="table-responsive">
+      <.table
+        id="products"
+        rows={@streams.products}
+        row_click={fn {_id, product} -> JS.navigate(~p"/products/#{product}/edit") end}
+      >
+        <:col :let={{_id, product}} label="">
+          <span :if={product.quantity < product.min_quantity}>🔴</span>
+        </:col>
+        <:col :let={{_id, product}} label="Produto">{product.name}</:col>
+        <:col :let={{_id, product}} label="Quantidade">{product.quantity}</:col>
+        <:col :let={{_id, product}} label="Estoque Mínimo">{product.min_quantity}</:col>
+      </.table>
     </div>
-    <.link patch={~p"/products/#{product}/edit"}>Edit</.link>
-  </:action>
-  <:action :let={{id, product}}>
-    <.link
-      phx-click={JS.push("delete", value: %{id: product.id}) |> hide("##{id}")}
-      data-confirm="Are you sure?"
-    >
-      Delete
-    </.link>
-  </:action>
-</.table>
-
-<.modal :if={@live_action in [:new, :edit]} id="product-modal" show on_cancel={JS.patch(~p"/products")}>
+  </div>
+</div>
+<.modal
+  :if={@live_action == :edit}
+  title="Editar Produto"
+  id="product-modal"
+  show
+  on_cancel={JS.patch(~p"/products")}
+>
   <.live_component
     module={MyGrocyWeb.ProductLive.FormComponent}
-    id={@product.id || :new}
+    id={@product.id}
     title={@page_title}
     action={@live_action}
     product={@product}

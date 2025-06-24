@@ -18,7 +18,37 @@ defmodule MyGrocy.Products do
 
   """
   def list_products do
-    Repo.all(Product)
+    from(p in Product,
+      order_by: [
+        desc: p.min_quantity > p.quantity,
+        asc: p.name
+      ]
+    )
+    |> Repo.all()
+  end
+
+  def list_last_changed_products(number \\ 10) do
+    from(p in Product,
+      limit: ^number,
+      order_by: [
+        desc: p.updated_at
+      ]
+    )
+    |> Repo.all()
+  end
+
+  def get_by_barcode(barcode) do
+    from(p in Product,
+      where: fragment("? @> ?", p.barcodes, ^[barcode])
+    )
+    |> Repo.one()
+  end
+
+  def get_by_name(name) do
+    from(p in Product,
+      where: p.name == ^name
+    )
+    |> Repo.one()
   end
 
   @doc """

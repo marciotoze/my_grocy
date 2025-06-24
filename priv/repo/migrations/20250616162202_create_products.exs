@@ -7,7 +7,7 @@ defmodule MyGrocy.Repo.Migrations.CreateProducts do
       add :name, :string
       add :quantity, :integer
       add :min_quantity, :integer
-      add :barcodes, :map
+      add :barcodes, {:array, :string}, default: []
 
       timestamps(type: :utc_datetime)
     end

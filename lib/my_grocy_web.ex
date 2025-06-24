@@ -17,7 +17,7 @@ defmodule MyGrocyWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets theme fonts images favicon.ico robots.txt)
+  def static_paths, do: ~w(assets theme sounds fonts images favicon.ico robots.txt)
 
   def router do
     quote do

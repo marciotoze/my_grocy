@@ -7,8 +7,8 @@ defmodule MyGrocy.Products.Product do
   schema "products" do
     field :name, :string
     field :quantity, :integer
-    field :min_quantity, :integer
-    field :barcodes, :map
+    field :min_quantity, :integer, default: 0
+    field :barcodes, {:array, :string}, default: []
 
     timestamps(type: :utc_datetime)
   end

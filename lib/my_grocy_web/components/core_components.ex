@@ -36,6 +36,7 @@ defmodule MyGrocyWeb.CoreComponents do
 
   """
   attr :id, :string, required: true
+  attr :title, :string, required: true
   attr :show, :boolean, default: false
   attr :on_cancel, JS, default: %JS{}
   slot :inner_block, required: true
@@ -43,6 +44,41 @@ defmodule MyGrocyWeb.CoreComponents do
   def modal(assigns) do
     ~H"""
     <div
+      class="modal fade show"
+      data-cancel={JS.exec(@on_cancel, "phx-remove")}
+      phx-mounted={@show && show_modal(@id)}
+      phx-remove={hide_modal(@id)}
+      id={@id}
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel2"
+      style="display: block;"
+      aria-modal="true"
+      role="dialog"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content tx-14">
+          <div class="modal-header">
+            <h6 class="modal-title" id="exampleModalLabel2">{@title}</h6>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              phx-click={JS.exec("data-cancel", to: "##{@id}")}
+            >
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id={"#{@id}-content"}>
+              {render_slot(@inner_block)}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id={"#{@id}-bg"} class="modal-backdrop fade show"></div>
+    <%!-- <div
       id={@id}
       phx-mounted={@show && show_modal(@id)}
       phx-remove={hide_modal(@id)}
@@ -84,7 +120,7 @@ defmodule MyGrocyWeb.CoreComponents do
           </div>
         </div>
       </div>
-    </div>
+    </div> --%>
     """
   end
 
@@ -156,8 +192,7 @@ defmodule MyGrocyWeb.CoreComponents do
         phx-connected={hide("#client-error")}
         hidden
       >
-        Attempting to reconnect
-        <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
+        Attempting to reconnect <.icon name="hero-arrow-path" class="ml-1 h-3 w-3 animate-spin" />
       </.flash>
 
       <.flash
@@ -472,33 +507,26 @@ defmodule MyGrocyWeb.CoreComponents do
       end
 
     ~H"""
-    <div class="overflow-y-auto px-4 sm:overflow-visible sm:px-0">
-      <table class="w-[40rem] mt-11 sm:w-full">
-        <thead class="text-sm text-left leading-6 text-zinc-500">
-          <tr>
-            <th :for={col <- @col} class="p-0 pb-4 pr-6 font-normal">{col[:label]}</th>
-            <th :if={@action != []} class="relative p-0 pb-4">
+    <div class="table-responsive">
+      <table class="table table-borderless table-sm tx-13 tx-nowrap mg-b-0">
+        <thead>
+          <tr class="tx-10 tx-spacing-1 tx-color-03 tx-uppercase">
+            <th :for={col <- @col} class="font-normal">{col[:label]}</th>
+            <th :if={@action != []} class="relative">
               <span class="sr-only">Actions</span>
             </th>
           </tr>
         </thead>
-        <tbody
-          id={@id}
-          phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}
-          class="relative divide-y divide-zinc-100 border-t border-zinc-200 text-sm leading-6 text-zinc-700"
-        >
-          <tr :for={row <- @rows} id={@row_id && @row_id.(row)} class="group hover:bg-zinc-50">
+        <tbody id={@id} phx-update={match?(%Phoenix.LiveView.LiveStream{}, @rows) && "stream"}>
+          <tr :for={row <- @rows} id={@row_id && @row_id.(row)}>
             <td
               :for={{col, i} <- Enum.with_index(@col)}
               phx-click={@row_click && @row_click.(row)}
-              class={["relative p-0", @row_click && "hover:cursor-pointer"]}
+              class={[@row_click && "hover:cursor-pointer"]}
             >
-              <div class="block py-4 pr-6">
-                <span class="absolute -inset-y-px right-0 -left-4 group-hover:bg-zinc-50 sm:rounded-l-xl" />
-                <span class={["relative", i == 0 && "font-semibold text-zinc-900"]}>
-                  {render_slot(col, @row_item.(row))}
-                </span>
-              </div>
+              <span class={["relative", i == 0 && "font-semibold"]}>
+                {render_slot(col, @row_item.(row))}
+              </span>
             </td>
             <td :if={@action != []} class="relative w-14 p-0">
               <div class="relative whitespace-nowrap py-4 text-right text-sm font-medium">

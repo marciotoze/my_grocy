@@ -17,9 +17,12 @@ defmodule MyGrocyWeb.Router do
   scope "/", MyGrocyWeb do
     pipe_through :browser
 
-    live "/", ProductLive.Index, :index
-    live "/add", ProductLive.Index, :add
-    live "/remove", ProductLive.Index, :remove
+    live_session :default, on_mount: [MyGrocyWeb.UserNavigation] do
+      live "/products", ProductLive.Index, :index
+      live "/products/:id/edit", ProductLive.Index, :edit
+
+      live "/", ProductLive.Change, :scan
+    end
   end
 
   # Other scopes may use custom stacks.
