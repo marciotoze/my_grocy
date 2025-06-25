@@ -29,8 +29,8 @@ services:
       - db
     command: >
       sh -c "mix deps.get &&
-             mix assets.deploy &&
              npm --prefix assets install &&
+             mix assets.deploy &&
              mix ecto.setup &&
              mix phx.server"
 
