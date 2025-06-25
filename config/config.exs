@@ -14,6 +14,7 @@ config :my_grocy,
 # Configures the endpoint
 config :my_grocy, MyGrocyWeb.Endpoint,
   url: [host: "localhost"],
+  check_origin: false,
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: MyGrocyWeb.ErrorHTML, json: MyGrocyWeb.ErrorJSON],
