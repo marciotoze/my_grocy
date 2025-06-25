@@ -18,13 +18,13 @@ COPY config config
 RUN mix local.hex --force && \
     mix local.rebar --force && \
     mix deps.get --only prod && \
-    mix deps.compile && \
-    npm --prefix assets install
+    mix deps.compile
 
 # Copia o restante do código
 COPY . .
 
 # Gera assets e digests
+RUN npm --prefix assets install
 RUN mix assets.deploy
 
 # Compila o app (sem release)
