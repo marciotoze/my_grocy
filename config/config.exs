@@ -14,7 +14,7 @@ config :my_grocy,
 # Configures the endpoint
 config :my_grocy, MyGrocyWeb.Endpoint,
   https: [
-    port: 4000,
+    port: 4001,
     cipher_suite: :strong,
     certfile: "priv/cert/selfsigned.pem",
     keyfile: "priv/cert/selfsigned_key.pem"
