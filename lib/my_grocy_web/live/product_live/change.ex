@@ -13,6 +13,9 @@ defmodule MyGrocyWeb.ProductLive.Change do
   end
 
   @impl true
+  def handle_params(_params, _uri, socket), do: {:noreply, socket}
+
+  @impl true
   def handle_event(
         "barcode_scanned",
         %{

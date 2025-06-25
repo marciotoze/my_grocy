@@ -52,12 +52,7 @@
         </div>
         <ul class="list-group list-group-flush tx-13">
           <li :for={{_id, product} <- @streams.products} class="list-group-item d-flex pd-sm-x-20">
-            <div class="avatar d-none d-sm-block">
-              <span class="avatar-initial rounded-circle bg-teal">
-                <ion-icon name="checkmark" class="tx-20"></ion-icon>
-              </span>
-            </div>
-            <div class="pd-sm-l-10">
+            <div>
               <p class="tx-medium mg-b-0">{product.name}</p>
               <small class="tx-12 tx-color-03 mg-b-0">{time_ago(product.updated_at)}</small>
             </div>
