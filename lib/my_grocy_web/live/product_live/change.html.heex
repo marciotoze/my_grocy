@@ -80,12 +80,10 @@
     <.form phx-submit="submit_new_product">
       <div class="form-group">
         <label class="d-block">Nome do produto</label>
-        <input
-          type="text"
-          class="form-control"
-          name="name"
-          placeholder="Insira o nome do produto"
-        />
+        <input id="product-list" list="produtos" name="name" class="form-control" />
+        <datalist id="produtos">
+          <option :for={product_name <- @autocomplete_name} value={product_name} />
+        </datalist>
       </div>
       <button class="btn btn-primary" type="submit">Enviar</button>
     </.form>

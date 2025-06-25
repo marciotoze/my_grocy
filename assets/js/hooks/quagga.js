@@ -14,7 +14,11 @@ const BarcodeScannerHook = {
         },
       },
       decoder: {
-        readers: ['ean_reader'], // EAN-13
+        readers: [
+          "ean_reader",
+          "upc_reader",
+          "ean_8_reader"
+        ],
       },
     }, (err) => {
       if (err) {
@@ -57,7 +61,7 @@ const BarcodeScannerHook = {
         setTimeout(() => {
           scanLock = false;
           lastCodes = [];
-        }, 1500); // 1.5s de cooldown pra evitar leitura repetida
+        }, 1000); // 1.5s de cooldown pra evitar leitura repetida
       }
       // }
     });

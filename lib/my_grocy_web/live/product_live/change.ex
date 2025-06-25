@@ -28,10 +28,14 @@ defmodule MyGrocyWeb.ProductLive.Change do
     case Products.get_by_barcode(barcode) do
       nil ->
         # nenhum produto com o barcode → pede nome
+        products = Products.list_products()
+
         {:noreply,
          socket
          |> assign(:pending_barcode, barcode)
+         |> assign(:pending_quantity, quantity)
          |> stream(:products, Products.list_last_changed_products())
+         |> assign(:autocomplete_name, Enum.map(products, & &1.name))
          |> assign(:show_modal, true)}
 
       product ->
@@ -57,20 +61,23 @@ defmodule MyGrocyWeb.ProductLive.Change do
 
   def handle_event("submit_new_product", %{"name" => name}, socket) do
     barcode = socket.assigns.pending_barcode
+    quantity = socket.assigns.pending_quantity
 
     product = Products.get_by_name(name)
 
     cond do
       product ->
-        Products.update_product(product, %{barcodes: [product.barcode | barcode]})
+        Products.update_product(product, %{
+          barcodes: [barcode | product.barcodes],
+          quantity: product.quantity + String.to_integer(quantity)
+        })
 
       true ->
         Products.create_product(%{
           name: name,
-          quantity: 1,
+          quantity: String.to_integer(quantity),
           barcodes: [barcode]
         })
-        |> IO.inspect(label: "New product created")
     end
 
     {:noreply,
