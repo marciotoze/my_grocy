@@ -18,7 +18,8 @@ COPY config config
 RUN mix local.hex --force && \
     mix local.rebar --force && \
     mix deps.get --only prod && \
-    mix deps.compile
+    mix deps.compile && \
+    npm --prefix assets install
 
 # Copia o restante do código
 COPY . .
