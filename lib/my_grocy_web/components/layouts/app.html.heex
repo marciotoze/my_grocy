@@ -3,16 +3,8 @@
     <div class="alert alert-solid show" role="alert"></div>
   </div>
   <div class="btn-menu btn-group" role="group" aria-label="Basic example">
-    <a href={~p"/"} class={["btn btn-primary", @request_path == ~p"/" && "active"]}>
-      Scanner
-    </a>
-
-    <a
-      href={~p"/products"}
-      class={["btn btn-primary", @request_path == ~p"/products" && "active"]}
-    >
-      Lista
-    </a>
+    <a href={~p"/"} class="btn btn-primary"> Scanner </a>
+    <a href={~p"/products"} class="btn btn-primary"> Lista </a>
   </div>
   {@inner_content}
 </main>
