@@ -13,13 +13,7 @@ config :my_grocy,
 
 # Configures the endpoint
 config :my_grocy, MyGrocyWeb.Endpoint,
-  https: [
-    port: 4001,
-    cipher_suite: :strong,
-    certfile: "priv/cert/selfsigned.pem",
-    keyfile: "priv/cert/selfsigned_key.pem"
-  ],
-  force_ssl: [hsts: true],
+  url: [host: "localhost"],
   check_origin: false,
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
