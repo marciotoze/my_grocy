@@ -24,7 +24,10 @@ RUN mix local.hex --force && \
 COPY . .
 
 # Gera assets e digests
-RUN npm --prefix assets install
+WORKDIR /app/assets
+RUN npm install
+
+WORKDIR /app
 RUN mix assets.deploy
 
 # Compila o app (sem release)

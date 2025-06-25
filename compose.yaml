@@ -30,7 +30,6 @@ services:
     command: >
       sh -c "mix deps.get &&
              mix assets.deploy &&
-             mix ecto.drop &&
              npm --prefix assets install &&
              mix ecto.setup &&
              mix phx.server"
