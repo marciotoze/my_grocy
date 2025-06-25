@@ -23,6 +23,7 @@ import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
 
 import BarcodeScannerHook from "./hooks/quagga"
+import ZXingHook from "./hooks/zxing"
 import ToastHook from "./hooks/toast"
 
 import "../css/app.css"
@@ -30,6 +31,7 @@ import "../css/app.css"
 let Hooks = {};
 Hooks.BarcodeScanner = BarcodeScannerHook;
 Hooks.Toast = ToastHook;
+Hooks.ZXing = ZXingHook;
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
