@@ -42,4 +42,4 @@ COPY --from=builder /app/_build/prod/rel/my_grocy /app/
 
 EXPOSE 80
 
-CMD /app/bin/my_grocy start
+CMD ["/app/bin/my_grocy", "start"]
