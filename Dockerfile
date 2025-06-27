@@ -39,7 +39,9 @@ RUN apk add --update --no-cache \
 WORKDIR /app
 
 COPY --from=builder /app/_build/prod/rel/my_grocy /app/
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 80
 
-CMD ["/app/bin/my_grocy", "start"]
+ENTRYPOINT ["/app/entrypoint.sh"]
