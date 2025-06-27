@@ -81,7 +81,7 @@
   on_cancel={JS.patch(~p"/")}
 >
   <div>
-    <.form phx-submit="submit_new_product">
+    <form phx-submit="submit_new_product">
       <div class="form-group">
         <label class="d-block">Nome do produto</label>
         <input id="product-list" list="produtos" name="name" class="form-control" />
@@ -90,6 +90,6 @@
         </datalist>
       </div>
       <button class="btn btn-primary" type="submit">Enviar</button>
-    </.form>
+    </form>
   </div>
 </.modal>

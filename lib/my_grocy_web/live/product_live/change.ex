@@ -2,7 +2,6 @@ defmodule MyGrocyWeb.ProductLive.Change do
   use MyGrocyWeb, :live_view
 
   alias MyGrocy.Products
-  alias MyGrocy.Products.Product
 
   @impl true
   def mount(_params, _session, socket) do
