@@ -21,7 +21,7 @@ FROM base AS builder
 RUN mix deps.compile
 
 RUN mix compile --warnings-as-errors
-RUN mix esbuild default --minify
+RUN mix esbuild my_grocy --minify
 RUN mix phx.digest
 RUN mix release
 
