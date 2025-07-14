@@ -24,7 +24,7 @@ defmodule MyGrocy.Services.ProductService do
         Logger.debug("No product found by barcode #{ean}, fetching product name from Google API")
 
         with {:ok, names} <- fetch_product_name(ean),
-             {:ok, %{"name" => simple_name, "category" => category}} <-
+             {:ok, %{name: simple_name, category: category}} <-
                OpenAIClient.simplify_and_categorize(names) do
           Logger.debug(
             "Fetched names: #{inspect(names)}; Simplified name: #{simple_name}, category: #{category}"

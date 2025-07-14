@@ -11,6 +11,8 @@ defmodule MyGrocy.Clients.OpenAIClient do
   plug Tesla.Middleware.JSON
   plug Tesla.Middleware.Logger
 
+  @timeout 30_000
+
   def simplify_and_categorize(names) when is_list(names) do
     names_str =
       names
@@ -50,7 +52,10 @@ defmodule MyGrocy.Clients.OpenAIClient do
         {"Authorization", "Bearer #{@openai_api_key}"}
       ]
 
-      case post("/chat/completions", body, headers: headers) do
+      # Increase timeout to 30 seconds
+      opts = [opts: [recv_timeout: @timeout, timeout: @timeout]]
+
+      case post("/chat/completions", body, headers: headers, opts: opts) do
         {:ok,
          %Tesla.Env{
            status: 200,

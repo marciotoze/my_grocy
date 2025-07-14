@@ -1,5 +1,5 @@
 defmodule MyGrocy.Workers.ProductWorker do
-  use Oban.Worker, queue: :default, max_attempts: 1
+  use Oban.Worker, queue: :default, max_attempts: 3
 
   require Logger
   alias MyGrocy.Services.ProductService
