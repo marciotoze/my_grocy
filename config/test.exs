@@ -1,4 +1,5 @@
 import Config
+config :my_grocy, Oban, testing: :manual
 
 # Configure your database
 #

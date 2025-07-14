@@ -25,10 +25,12 @@ defmodule MyGrocyWeb.Router do
     end
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", MyGrocyWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MyGrocyWeb do
+    pipe_through :api
+
+    post "/products/add/:ean", ProductController, :add
+    post "/products/remove/:ean", ProductController, :remove
+  end
 
   # Enable LiveDashboard in development
   if Application.compile_env(:my_grocy, :dev_routes) do

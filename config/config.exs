@@ -7,6 +7,12 @@
 # General application configuration
 import Config
 
+config :my_grocy, Oban,
+  engine: Oban.Engines.Basic,
+  notifier: Oban.Notifiers.Postgres,
+  queues: [default: 10],
+  repo: MyGrocy.Repo
+
 config :my_grocy,
   ecto_repos: [MyGrocy.Repo],
   generators: [timestamp_type: :utc_datetime, binary_id: true]
@@ -40,6 +46,17 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :tesla, adapter: Tesla.Adapter.Mint
+
+config :my_grocy, :google_api_key, System.get_env("GOOGLE_API_KEY")
+config :my_grocy, :google_cse_id, System.get_env("GOOGLE_CSE_ID")
+config :my_grocy, :openai_api_key, System.get_env("OPENAI_API_KEY")
+
+# Redis configuration
+config :my_grocy, :redis,
+  host: System.get_env("REDIS_HOST", "localhost"),
+  port: String.to_integer(System.get_env("REDIS_PORT", "6379"))
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

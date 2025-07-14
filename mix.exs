@@ -32,21 +32,26 @@ defmodule MyGrocy.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bandit, "~> 1.5"},
+      {:dns_cluster, "~> 0.1.1"},
+      {:ecto_sql, "~> 3.10"},
+      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:floki, ">= 0.30.0", only: :test},
+      {:igniter, "~> 0.5", only: [:dev]},
+      {:jason, "~> 1.2"},
+      {:mint, "~> 1.0"},
+      {:oban, "~> 2.19"},
       {:phoenix, "~> 1.7.21"},
       {:phoenix_ecto, "~> 4.5"},
-      {:ecto_sql, "~> 3.10"},
-      {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
+      {:phoenix_live_dashboard, "~> 0.8.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 1.0"},
-      {:floki, ">= 0.30.0", only: :test},
-      {:phoenix_live_dashboard, "~> 0.8.3"},
-      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:postgrex, ">= 0.0.0"},
+      {:redix, "~> 1.1"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
-      {:jason, "~> 1.2"},
-      {:dns_cluster, "~> 0.1.1"},
-      {:bandit, "~> 1.5"}
+      {:tesla, "~> 1.11"}
     ]
   end
 

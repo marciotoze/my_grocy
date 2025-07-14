@@ -11,10 +11,12 @@ defmodule MyGrocy.Application do
       MyGrocyWeb.Telemetry,
       MyGrocy.Repo,
       {DNSCluster, query: Application.get_env(:my_grocy, :dns_cluster_query) || :ignore},
+      {Oban, Application.fetch_env!(:my_grocy, Oban)},
       {Phoenix.PubSub, name: MyGrocy.PubSub},
-      # Start a worker by calling: MyGrocy.Worker.start_link(arg)
-      # {MyGrocy.Worker, arg},
-      # Start to serve requests, typically the last entry
+      {Redix,
+       name: MyGrocy.Redis,
+       host: Application.get_env(:my_grocy, :redis)[:host],
+       port: Application.get_env(:my_grocy, :redis)[:port]},
       MyGrocyWeb.Endpoint
     ]
 
