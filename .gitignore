@@ -35,3 +35,5 @@ my_grocy-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore dev.secret.exs
+dev.secret.exs
