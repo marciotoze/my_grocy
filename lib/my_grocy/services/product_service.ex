@@ -7,15 +7,6 @@ defmodule MyGrocy.Services.ProductService do
   alias MyGrocy.Products
   alias MyGrocy.Clients.{GoogleClient, OpenAIClient}
 
-  @categories [
-    "alimento",
-    "bebida",
-    "limpeza",
-    "higiene",
-    "utilidade",
-    "outro"
-  ]
-
   def add_product_by_ean(ean) do
     Logger.debug("Adding product by EAN: #{ean}")
 

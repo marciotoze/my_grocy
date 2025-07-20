@@ -3,15 +3,18 @@ defmodule MyGrocy.Clients.OpenAIClient do
   Tesla client for OpenAI API with Redis cache
   """
 
-  use Tesla
-
-  @openai_api_key Application.get_env(:my_grocy, :openai_api_key)
-
-  plug Tesla.Middleware.BaseUrl, "https://api.openai.com/v1"
-  plug Tesla.Middleware.JSON
-  plug Tesla.Middleware.Logger
+  @openai_api_key Application.compile_env!(:my_grocy, :openai_api_key)
 
   @timeout 30_000
+
+  @categories [
+    "alimento",
+    "bebida",
+    "limpeza",
+    "higiene",
+    "utilidade",
+    "outro"
+  ]
 
   def simplify_and_categorize(names) when is_list(names) do
     names_str =
@@ -24,7 +27,7 @@ defmodule MyGrocy.Clients.OpenAIClient do
     Dado até 3 nomes de um mesmo produto,
     simplifique para um único nome adequado para uso em um inventário doméstico
     (sem marca ou quantidade)
-    e categorize em uma das opções: alimento, bebida, limpeza, higiene, utilidade, outro.
+    e categorize em uma das opções: #{Enum.join(@categories, ", ")}.
     Responda apenas em JSON (não array): {"name":"nome_simplificado", "category":"categoria"}.
     Nomes:
     #{names_str}
@@ -49,13 +52,14 @@ defmodule MyGrocy.Clients.OpenAIClient do
       }
 
       headers = [
-        {"Authorization", "Bearer #{@openai_api_key}"}
+        {"Authorization", "Bearer #{@openai_api_key}"},
+        {"Content-Type", "application/json"}
       ]
 
       # Increase timeout to 30 seconds
       opts = [opts: [recv_timeout: @timeout, timeout: @timeout]]
 
-      case post("/chat/completions", body, headers: headers, opts: opts) do
+      case Tesla.post(client(), "/chat/completions", body, headers: headers, opts: opts) do
         {:ok,
          %Tesla.Env{
            status: 200,
@@ -73,7 +77,7 @@ defmodule MyGrocy.Clients.OpenAIClient do
           end
 
         {:ok, %Tesla.Env{status: status, body: error_body}} ->
-          {:error, "OpenAI API error: status #{status}"}
+          {:error, "OpenAI API error: status #{status} and body #{inspect(error_body)}"}
 
         {:error, reason} ->
           {:error, "OpenAI API request failed: #{inspect(reason)}"}
@@ -85,5 +89,13 @@ defmodule MyGrocy.Clients.OpenAIClient do
     :crypto.hash(:sha256, Jason.encode!(messages))
     |> Base.encode16(case: :lower)
     |> binary_part(0, 16)
+  end
+
+  defp client do
+    Tesla.client([
+      {Tesla.Middleware.BaseUrl, "https://api.openai.com/v1"},
+      {Tesla.Middleware.JSON, engine: Jason},
+      {Tesla.Middleware.Logger, log_level: :debug}
+    ])
   end
 end
