@@ -65,6 +65,15 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :my_grocy, :google_api_key, System.get_env("GOOGLE_API_KEY")
+  config :my_grocy, :google_cse_id, System.get_env("GOOGLE_CSE_ID")
+  config :my_grocy, :openai_api_key, System.get_env("OPENAI_API_KEY")
+
+  # Redis configuration
+  config :my_grocy, :redis,
+    host: System.get_env("REDIS_HOST", "localhost"),
+    port: String.to_integer(System.get_env("REDIS_PORT", "6379"))
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key
