@@ -23,10 +23,20 @@ defmodule MyGrocy.Clients.OpenAIClient do
       |> Enum.map(fn {n, i} -> "#{i}) #{n}" end)
       |> Enum.join("\n")
 
+    products_names =
+      MyGrocy.Products.list_products()
+      |> Enum.map(& &1.name)
+
     prompt = """
     Dado até 3 nomes de um mesmo produto,
-    simplifique para um único nome adequado para uso em um inventário doméstico
-    (sem marca ou quantidade)
+    simplifique para um único nome adequado para uso em um inventário doméstico,
+    (sem marca ou quantidade) para que se iguale ao nome de produtos do mesmo tipo, por exemplo:
+    "Leite UHT integral" deve ser simplificado para "Leite" e "Leite UHT desnatado" deve ser simplificado para "Leite".
+    produtos light, diet, zero, etc. devem ser simplificados para o nome do produto sem a palavra light, diet, zero, etc.
+    se o produto for similar a algum dos nomes da lista abaixo, retorne o nome da lista, se não for similar, retorne o nome simplificado:
+
+    #{Enum.join(products_names, ", ")}
+
     e categorize em uma das opções: #{Enum.join(@categories, ", ")}.
     Responda apenas em JSON (não array): {"name":"nome_simplificado", "category":"categoria"}.
     Nomes:

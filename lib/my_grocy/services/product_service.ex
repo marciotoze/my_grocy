@@ -7,6 +7,7 @@ defmodule MyGrocy.Services.ProductService do
   alias MyGrocy.Products
   alias MyGrocy.Clients.{GoogleClient, OpenAIClient}
 
+  @spec add_product_by_ean(String.t()) :: {:ok, String.t()} | {:error, String.t()}
   def add_product_by_ean(ean) do
     Logger.debug("Adding product by EAN: #{ean}")
 
@@ -17,6 +18,8 @@ defmodule MyGrocy.Services.ProductService do
         with {:ok, names} <- fetch_product_name(ean),
              {:ok, %{name: simple_name, category: category}} <-
                OpenAIClient.simplify_and_categorize(names) do
+          simple_name = String.capitalize(simple_name)
+
           Logger.debug(
             "Fetched names: #{inspect(names)}; Simplified name: #{simple_name}, category: #{category}"
           )
@@ -88,13 +91,14 @@ defmodule MyGrocy.Services.ProductService do
     end
   end
 
+  @spec remove_product_by_ean(String.t()) :: {:ok, String.t()} | {:error, String.t()}
   def remove_product_by_ean(ean) do
     Logger.debug("Removing product by EAN: #{ean}")
 
     case Products.get_by_barcode(ean) do
       nil ->
         Logger.debug("Product not found for EAN: #{ean}")
-        {:ok, "Product not found for EAN: #{ean}"}
+        {:error, "Product not found for EAN: #{ean}"}
 
       product ->
         Logger.debug("Product found for EAN: #{ean}, decrementing quantity")
