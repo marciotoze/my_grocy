@@ -3,16 +3,13 @@ defmodule MyGrocy.Clients.GoogleClient do
   Tesla client for Google Custom Search API with Redis cache
   """
 
-  @google_api_key Application.compile_env!(:my_grocy, :google_api_key)
-  @google_cse_id Application.compile_env!(:my_grocy, :google_cse_id)
-
   def search_names_by_ean(ean) do
     cache_key = "google_search:#{ean}"
 
     MyGrocy.Cache.get_or_set(cache_key, fn ->
       params = [
-        key: @google_api_key,
-        cx: @google_cse_id,
+        key: google_api_key(),
+        cx: google_cse_id(),
         q: ean
       ]
 
@@ -48,4 +45,7 @@ defmodule MyGrocy.Clients.GoogleClient do
       {Tesla.Middleware.Logger, log_level: :debug}
     ])
   end
+
+  defp google_api_key(), do: Application.get_env(:my_grocy, :google_api_key)
+  defp google_cse_id(), do: Application.get_env(:my_grocy, :google_cse_id)
 end

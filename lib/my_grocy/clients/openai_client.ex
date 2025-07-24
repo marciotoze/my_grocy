@@ -3,8 +3,6 @@ defmodule MyGrocy.Clients.OpenAIClient do
   Tesla client for OpenAI API with Redis cache
   """
 
-  @openai_api_key Application.compile_env!(:my_grocy, :openai_api_key)
-
   @timeout 30_000
 
   @categories [
@@ -62,7 +60,7 @@ defmodule MyGrocy.Clients.OpenAIClient do
       }
 
       headers = [
-        {"Authorization", "Bearer #{@openai_api_key}"},
+        {"Authorization", "Bearer #{openai_api_key()}"},
         {"Content-Type", "application/json"}
       ]
 
@@ -108,4 +106,6 @@ defmodule MyGrocy.Clients.OpenAIClient do
       {Tesla.Middleware.Logger, log_level: :debug}
     ])
   end
+
+  defp openai_api_key(), do: Application.get_env(:my_grocy, :openai_api_key)
 end
